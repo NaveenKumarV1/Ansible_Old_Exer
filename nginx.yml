@@ -1,0 +1,27 @@
+# 1. Install nginx, 
+# 2. Check if is installed or not using dpkg-query command
+# 3. Uninstall nginx
+# 4. Check if uninstall is successful or not.
+
+---
+- hosts: ymlhosts
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Check whether NGINX is installed or not.
+    command: dpkg-query -l nginx
+    register: dpkgout
+  - debug: var=dpkgout.stdout_lines
+
+  - name: Install NGINX if not installed
+    apt: pkg=nginx state=installed update_cache=false force=yes
+    when: dpkgout.stdout.find('nginx') != -1
+
+  - name: Uninstall NGINX
+    #apt: pkg=nginx purge=yes pkg=nginx-common purge=yes pkg=nginx-full purge=yes pkg=nginx-core purge=yes
+    apt: pkg=nginx-common,nginx-core,nginx state=absent force=yes
+
+  - name: Check whether NGINX is Uninstalled or not.
+    command: dpkg-query -l nginx
+    register: dpkgout
+  - debug: var=dpkgout.stdout_lines

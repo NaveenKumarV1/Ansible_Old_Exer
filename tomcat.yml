@@ -1,0 +1,19 @@
+---
+ - hosts: Peerhosts
+ #- hosts: Peerhosts
+   sudo: yes
+   #become: yes
+   #become_user: tcs
+   gather_facts: yes
+   tasks:
+
+   - name: Install Tomcat7
+     apt: name=tomcat7 force=yes state=present
+
+   - apt: name=tomcat7-docs state=present
+   - apt: name=tomcat7-admin state=present
+   - apt: name=tomcat7-examples state=present
+
+   - lineinfile: dest=/etc/tomcat7/tomcat-users.xml  insertbefore="</tomcat-users>" line="  <user username='admin1' password='nopassword' roles='manager-gui,admin-gui'/>"
+
+   - shell: sudo service tomcat7 restart

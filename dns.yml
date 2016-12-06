@@ -1,0 +1,13 @@
+---
+ - hosts: ymlhosts
+   sudo: yes
+   tasks:
+   - name: Installing bind9
+     apt: name=bind9 force=yes state=present
+
+   - copy: src=/etc/bind/named.conf.options dest=/etc/bind/named.conf.options backup=yes
+   - shell: service bind9 restart
+   - copy: src=/etc/bind/db.ansible.com dest=/etc/bind/db.ansible.com
+   - copy: src=/etc/bind/db.10 dest=/etc/bind/db.10
+   - copy: src=/etc/bind/named.conf.local dest=/etc/bind/named.conf.local
+   - shell: service bind9 restart

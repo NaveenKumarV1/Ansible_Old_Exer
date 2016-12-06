@@ -1,0 +1,12 @@
+# Use case to update the hosts with latest packages.
+---
+ - hosts: ymlhosts
+   tasks:
+     - name: Updating latest softwares on host system
+       shell: sudo apt-get update
+       register: up
+     - debug:  var=up.stdout_lines
+       notify: aptupdates
+   handlers:
+       - name: aptupdates
+         shell: echo "Update is completed"

@@ -1,0 +1,28 @@
+# Use case to install the samba on client host
+---
+#  - hosts: all
+  - hosts: ymlhosts
+    sudo: yes
+    tasks:
+    - name: Check if samba is installed using dpkg-query
+      command: dpkg-query -l samba
+      register: deb_check
+
+    - name: Install samba on ymlhosts, if it is not installed.
+      apt: pkg=samba state=installed
+      when: deb_check.stdout.find('<none>') != -1
+
+    - name: Taking backup of smb.conf file
+      shell: mv /etc/samba/smb.conf /etc/samba/smb.conf.old
+
+    - name: Configureing cilent smb.conf file with local smb.conf file
+      template: src=smb_local.conf dest=/etc/samba/smb.conf
+
+      #command: diff /etc/samba/smb.conf.old /etc/samba/smb.conf >/tmp/smb.diff
+      #register: DiffOutpt
+
+      #debug: var=DiffOutput.stdout_lines
+      #command: cat /tmp/smb.diff
+
+    - name: Restarting samba servie
+      shell: sudo service smbd restart

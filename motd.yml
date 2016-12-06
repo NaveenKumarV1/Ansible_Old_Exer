@@ -1,0 +1,9 @@
+# Sending a messaged in /home/tcs/nv/messages  file to the hosts
+---
+ - hosts: all
+   tasks:
+   - name: sending message of the day from /etc/motd
+     copy: src=/home/tcs/tmp/new/ansible/message dest=/tmp/motd
+   - name: Executing wall command on all agent hosts
+     shell: cat /tmp/motd |wall
+

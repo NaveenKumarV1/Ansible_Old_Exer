@@ -1,0 +1,9 @@
+#  Usecase to add a user in to the client host.
+---
+ - hosts: ymlhosts
+   sudo: yes
+   vars: 
+    #python -c 'import crypt; print crypt.crypt("amd123", "$1$SomeSalt$")'
+    pswd: $1$SomeSalt$UMJ81iu2moxENL3v4Sh3g0
+   tasks:
+   - user: name=amduser groups=tcs password={{pswd}} state=present createhome=yes

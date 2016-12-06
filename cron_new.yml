@@ -1,0 +1,9 @@
+---
+ - hosts: ymlhosts
+#   sudo: yes
+   tasks:
+   - name: executing cron jobs
+     template: src=/var/Fileupdate.sh dest=/var/Fileupdate.sh mode=755
+   - cron: name="updateCron" minute="0/10" job="sh /var/Fileupdate.sh" state=present
+   - file: path=/etc/cron.d/cron.allow owner=root group=root mode=0644 state=touch
+   - lineinfile: dest=/etc/cron.d/cron.allow line="root"

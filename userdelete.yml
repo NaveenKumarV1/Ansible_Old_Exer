@@ -1,0 +1,6 @@
+# Usecase to delete a amduser from client host
+---
+ - hosts: ymlhosts
+   sudo: yes
+   tasks:
+   - user: name=amduser state=absent

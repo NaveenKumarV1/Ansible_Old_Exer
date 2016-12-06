@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: deleting users in a loop.
+    #python -c 'import crypt; print crypt.crypt("test", "$1$SomeSalt$")'
+#    user: name={{item}} state=absent group={{item}} password=$1$SomeSalt$aIJ0bvHJBSYd307VQuuD90
+    user: name={{item}} state=absent group={{item}} password=$1$SomeSalt$aIJ0bvHJBSYd307VQuuD90
+    with_items:
+    - test1
+    - test2
+    - test3

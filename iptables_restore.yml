@@ -1,0 +1,7 @@
+---
+ - hosts: ymlhosts
+   sudo: yes
+   tasks:
+
+   - name: Restoring IPTable contents with the local copy
+     command: iptables-restore  /var/iptables.copy

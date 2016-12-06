@@ -1,0 +1,10 @@
+#  Usecase to change password for amduser in client host.
+---
+ - hosts: ymlhosts
+   sudo: yes
+   vars: 
+    #python -c 'import crypt; print crypt.crypt("amd12345", "$1$amd$")'
+    pswd: $1$amd$gp5EECx3oaHQOPHFWFlYC0
+   tasks:
+   - name: Updating the password for the amduser
+     user: name=amduser update_password=always password={{pswd}} state=present 

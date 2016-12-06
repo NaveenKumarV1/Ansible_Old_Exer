@@ -1,0 +1,10 @@
+# Shows the uptime of the ymlhosts
+---
+# - hosts: all
+ #- hosts: Peerhosts
+ - hosts: all
+#   gather_facts: True
+   tasks:
+   - shell: uptime
+     register: uptimeout
+   - debug: var=uptimeout.stdout

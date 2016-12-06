@@ -1,0 +1,12 @@
+---
+ - hosts: all
+   tasks:
+   - command: echo "Hello"
+     register: ret
+   - debug: var=ret.stdout
+   - shell: 'ls -ltr '
+     register: ret
+   - debug: var=ret.stdout
+   - shell: 'date'
+     register: ret
+   - debug: var=ret.stdout

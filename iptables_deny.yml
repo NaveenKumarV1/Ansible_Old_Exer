@@ -1,0 +1,11 @@
+---
+ - hosts: all
+   sudo: yes
+   tasks:
+   - name: Preserving IPTables contents in a local copy
+     shell: iptables-save > /var/iptables.copy
+
+   - name: Denying Ping from Outside to Inside
+     command: iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+     command: iptables -A OUTPUT -p icmp --icmp-type echo-reply -j DROP
+
